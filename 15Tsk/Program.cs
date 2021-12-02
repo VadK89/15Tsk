@@ -18,80 +18,79 @@ namespace _15Tsk
         static void Main(string[] args)
         {
             //Задаение параметров для арифметической прогрессии
-            Console.WriteLine("Введите значение шага арифметической прогрессии");
-            int step = Convert.ToInt32(Console.ReadLine());
-            ArithProgression arithProgression = new ArithProgression(step);
             Console.WriteLine("Введите значение первого элемента арифметической прогрессии");
             int ela = Convert.ToInt32(Console.ReadLine());
-            arithProgression.setStart(ela);
+            Console.WriteLine("Введите значение шага арифметической прогрессии");
+            int step = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Введите количество членов прогрессии");
             int lengar = Convert.ToInt32(Console.ReadLine());
+            ArithProgression arithProgression = new ArithProgression(step);
+            arithProgression.SetStart(ela);
             //Вывод прогрессии
             Console.WriteLine("Арифметическая прогрессия:");
             Console.WriteLine(ela);
+            
             for (int i = 0; i < lengar; i++)
             {
-                arithProgression.getNext();
+                arithProgression.GetNext();
                 Console.WriteLine(arithProgression.NextEl);
             }  
             //проверка метода сброса
-            arithProgression.reset();
-            Console.WriteLine("Значение первого элемента арифметической прогрессии после сброса", arithProgression.NextEl);
-            
-            //Задание параметров геометрической прогрессии
-            Console.WriteLine("Введите значение знаменателя геометрической прогрессии");
-            int znam = Convert.ToInt32(Console.ReadLine());
-            GeomProgression geomProgression = new GeomProgression(znam);
+            arithProgression.Reset();
+            //Задание начальных значений геометрической прогрессии
             Console.WriteLine("Введите значение первого элемента геометрической прогрессии");
             int elg = Convert.ToInt32(Console.ReadLine());
-            geomProgression.setStart(elg);
+            Console.WriteLine("Введите значение знаменателя геометрической прогрессии");
+            int znam = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Введите количество членов геометрической прогрессии");
             int lengge = Convert.ToInt32(Console.ReadLine());
+            GeomProgression geomProgression = new GeomProgression(znam);            
+            geomProgression.SetStart(elg);            
             //Вывод прогрессии
             Console.WriteLine("Геометрическая прогрессия:");
             Console.WriteLine(elg);
             for (int i = 0; i < lengge - 1; i++)
             {
-                geomProgression.getNext();
+                geomProgression.GetNext();
                 Console.WriteLine(geomProgression.NextGeo);
             }
             //проверка метода сброса
-            geomProgression.reset();
-            Console.WriteLine("Значение первого элемента геометрической прогрессии после сброса", geomProgression.NextGeo);
+            geomProgression.Reset();
             Console.ReadKey();
         }
     }
     interface ISeries
     {
-        void setStart(int x);
-        int getNext();
-        void reset();
+        void SetStart(int x);
+        int GetNext();
+        void Reset();
     }
     class ArithProgression : ISeries
     {
-        public int FirstEl; 
-        public int StepAr;
+        int FirstEl; 
+        int StepAr;
+        int ArLength;
         public int NextEl { get; set; }
         
         public ArithProgression(int Step)
         {
-            StepAr = Step;
+            StepAr = Step;            
         }
-         public void setStart(int x)
+         public void SetStart(int x)
         {
-            NextEl = x;
-            FirstEl = NextEl;
+            FirstEl = x;
+            NextEl = FirstEl;
         }
 
-        public int getNext()
+        public int GetNext()
         {
             NextEl += StepAr;
             return NextEl;
         }
-
-        public void reset()
+        public void Reset()
         {
             NextEl = FirstEl;
+            Console.WriteLine("Первый элемент арифметической прогрессии после сброса {0}", NextEl);
             return;
         }        
     }
@@ -99,25 +98,26 @@ namespace _15Tsk
     {
         public int FirstGeo;
         public int NextGeo;
-        public int Znam;
+        public int StepGeo;
         public GeomProgression(int ZN)
         {
-            Znam = ZN;
+            StepGeo = ZN;
         }
-        public void setStart(int x)
+        public void SetStart(int x)
         {
-            NextGeo = x;
-            FirstGeo = NextGeo;
+            FirstGeo = x;
+            NextGeo = FirstGeo;
         }
-        public int getNext()
+        public int GetNext()
         {
-            NextGeo = NextGeo * Znam;
+            NextGeo = NextGeo * StepGeo;
             return NextGeo;
         }
 
-        public void reset()
+        public void Reset()
         {
             NextGeo = FirstGeo;
+            Console.WriteLine("Первый элемент геометричевской прогрессии после сброса {0}", NextGeo);
             return;
         }
 
